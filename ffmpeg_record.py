@@ -45,6 +45,7 @@ result = mlx_whisper.transcribe(
 )
 print(result)
 
+
 # 音声データを指定して文字起こし
 def preprocess_audio(sound):
     if sound.frame_rate != 16000:
@@ -68,3 +69,15 @@ for data in audio_data:
         arr, path_or_hf_repo="mlx-community/whisper-base-mlx"
     )
     print(result)
+
+    # resultの内容をtxtファイルに保存
+    import os
+    counter = 0
+    filename = "transcription.txt"
+    while os.path.exists(filename):
+        counter += 1
+        filename = f"transcription_{counter}.txt"
+
+    with open(filename, 'w', encoding='utf-8') as f:
+        f.write(str(result))
+    print(f"文字起こし結果が保存されました: {filename}")
